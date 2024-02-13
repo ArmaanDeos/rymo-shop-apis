@@ -20,7 +20,7 @@ const productSchema = new Schema(
       type: Array,
     },
     size: {
-      type: Array,
+      type: String,
     },
     color: {
       type: Array,
