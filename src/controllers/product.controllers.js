@@ -7,36 +7,28 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 const createProduct = asyncHandler(async (req, res) => {
 
 
-  const newProduct = new Product(req.body);
+
+  
+  const { title, desc, img, categories, size, color, price } = req.body;
 
   try {
-    const savedProduct = await newProduct.save();
-    res.status(200).json(savedProduct);
-  } catch (err) {
-    res.status(500).json(err);
+    const newProduct = await Product.create({
+      title,
+      desc,
+      img,
+      categories,
+      size,
+      color,
+      price,
+    });
+
+    res
+      .status(201)
+      .json(new ApiResponse(201, newProduct, "Product created successfully."));
+  } catch (error) {
+    console.log("Error while creating product:", error);
+    res.status(500).json(new ApiError(500, error.message));
   }
-});
-  
-  // const { title, desc, img, categories, size, color, price } = req.body;
-
-  // try {
-  //   const newProduct = await Product.create({
-  //     title,
-  //     desc,
-  //     img,
-  //     categories,
-  //     size,
-  //     color,
-  //     price,
-  //   });
-
-  //   res
-  //     .status(201)
-  //     .json(new ApiResponse(201, newProduct, "Product created successfully."));
-  // } catch (error) {
-  //   console.log("Error while creating product:", error);
-  //   res.status(500).json(new ApiError(500, error.message));
-  // }
 });
 
 // ? UPDATE PRODUCT
