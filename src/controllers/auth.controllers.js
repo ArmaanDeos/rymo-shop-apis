@@ -145,4 +145,17 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 });
 
-export { registerUser, loginUser, generateAccessAndRefreshToken };
+const logoutUser = asyncHandler(async (req, res) => {
+  // Set cookie with an expiration date in the past to clear it
+  res.cookie("token", "", {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged Out Successfully",
+  });
+});
+
+export { registerUser, loginUser, generateAccessAndRefreshToken,logoutUser };
